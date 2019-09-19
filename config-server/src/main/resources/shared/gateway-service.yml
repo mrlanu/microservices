@@ -17,5 +17,11 @@ zuul:
       stripPrefix: false
       sensitiveHeaders:
 
+    employee-search-service:
+      path: /employee/**
+      serviceId: employee-search-service
+      stripPrefix: false
+      sensitiveHeaders:
+
 server:
   port: 8080
