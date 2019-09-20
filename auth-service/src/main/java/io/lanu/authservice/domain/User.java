@@ -1,5 +1,6 @@
-package io.lanu.authservice;
+package io.lanu.authservice.domain;
 
+import io.lanu.authservice.enums.Authorities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +11,7 @@ import java.util.*;
 
 @Document
 public class User implements UserDetails {
+
     @Id
     private String id;
 
@@ -117,4 +119,5 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

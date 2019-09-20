@@ -1,5 +1,6 @@
-package io.lanu.authservice;
+package io.lanu.authservice.service;
 
+import io.lanu.authservice.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

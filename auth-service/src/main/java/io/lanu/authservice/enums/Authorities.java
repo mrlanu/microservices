@@ -1,8 +1,9 @@
-package io.lanu.authservice;
+package io.lanu.authservice.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Authorities implements GrantedAuthority {
+
     ROLE_USER;
 
     @Override
