@@ -4,6 +4,7 @@ import io.lanu.authservice.domain.User;
 import io.lanu.authservice.dto.UserDto;
 import io.lanu.authservice.dto.UserRegistrationDto;
 import io.lanu.authservice.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +15,8 @@ import java.security.Principal;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/current")
     public Principal getUser(Principal principal) {

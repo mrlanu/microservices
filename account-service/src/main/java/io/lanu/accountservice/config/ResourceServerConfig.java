@@ -24,15 +24,11 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    private final ResourceServerProperties sso;
-
-    private final OAuth2ClientContext oAuth2ClientContext;
+    @Autowired
+    private ResourceServerProperties sso;
 
     @Autowired
-    public ResourceServerConfig(ResourceServerProperties sso, OAuth2ClientContext oAuth2ClientContext) {
-        this.sso = sso;
-        this.oAuth2ClientContext = oAuth2ClientContext;
-    }
+    private OAuth2ClientContext oAuth2ClientContext;
 
     @Bean
     @ConfigurationProperties(prefix = "security.oauth2.client")
