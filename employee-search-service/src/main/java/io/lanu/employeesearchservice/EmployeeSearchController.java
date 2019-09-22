@@ -13,11 +13,11 @@ import java.util.Collection;
 public class EmployeeSearchController {
     @Autowired
     EmployeeSearchService employeeSearchService;
-    @RequestMapping("/employee/find/{id}")
+    @RequestMapping("/find/{id}")
     public Employee findById(@PathVariable Long id) {
         return employeeSearchService.findById(id);
     }
-    @RequestMapping("/employee/findall")
+    @RequestMapping("/findall")
     public Collection< Employee > findAll() {
         return employeeSearchService.findAll();
     }

@@ -41,7 +41,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         return new OAuth2FeignRequestInterceptor(oAuth2ClientContext, clientCredentialsResourceDetails());
     }
 
-    @Bean
+    /*@Bean
     public OAuth2RestOperations restTemplate(OAuth2ClientContext oauth2ClientContext) {
         return new OAuth2RestTemplate(clientCredentialsResourceDetails(), oauth2ClientContext);
     }
@@ -50,7 +50,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Primary
     public ResourceServerTokenServices resourceServerTokenServices() {
         return new UserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());
-    }
+    }*/
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
