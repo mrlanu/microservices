@@ -6,7 +6,10 @@ spring:
       username: oauth-user
       password: password
       database: oauth-db
+  application:
+    name: auth-service
+
 server:
   servlet:
     context-path: /uaa
-  port: 8081
+  port: 8002

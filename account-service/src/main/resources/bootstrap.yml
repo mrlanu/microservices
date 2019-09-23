@@ -1,11 +1,17 @@
 spring:
-  application:
-    name: account-service
   cloud:
     config:
-      uri: http://localhost:8888
+      name: account-service
+      discovery:
+        service-id: config
+        enabled: true
       fail-fast: true
       password: 1234
       username: user
   main:
     allow-bean-definition-overriding: true #i dont remember why but i think there is a bug with spring cloud and OAuth2ClientContext
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8001/eureka/

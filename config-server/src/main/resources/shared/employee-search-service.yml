@@ -1,17 +1,21 @@
+spring:
+  application:
+    name: employee-search-service
+
+server:
+  servlet:
+    context-path: /employee
+  port: 8004
+
+feign:
+  hystrix:
+    enabled: true
+
 security:
   oauth2:
     client:
       clientId: account-service
       clientSecret: 1234
-      accessTokenUri: http://localhost:8081/uaa/oauth/token
+      accessTokenUri: http://localhost:8080/uaa/oauth/token
       grant-type: client_credentials
       scope: server
-
-server:
-  servlet:
-    context-path: /employee
-  port: 9001
-
-feign:
-  hystrix:
-    enabled: true

@@ -1,12 +1,9 @@
 #This file is the entrypoint for spring to know where to look for the configuration file and hold the initial configuration
-
 spring:
-  application:
-    name: registry-service #name of the application
   cloud:
     config:
-      uri: http://localhost:8888 #where the config-service is running
-      fail-fast: true #the service will not run if it can't reach the config-service
+      name: registry-service
+      uri: http://localhost:8000 #where the config-service is running
       password: 1234 #password of the config-service
       username: user #username of the config-service
 
