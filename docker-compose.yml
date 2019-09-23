@@ -6,6 +6,8 @@ services:
             context: .
             dockerfile: Dockerfile-configservice
         image: config-service:latest
+        environment:
+            - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH-LOCATION=file://application-config/shared
         expose:
             - 8888
         ports:

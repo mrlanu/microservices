@@ -1,7 +1,7 @@
 FROM alpine-jdk:base
 MAINTAINER lanu
 COPY files/config-service.jar /opt/lib/
-RUN mkdir /var/lib/config-repo
+COPY application-config/shared /application-config/shared
 ENTRYPOINT ["/usr/bin/java"]
 CMD ["-jar", "/opt/lib/config-service.jar"]
 VOLUME /var/lib/config-repo
