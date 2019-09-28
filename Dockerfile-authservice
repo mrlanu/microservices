@@ -1,0 +1,6 @@
+FROM alpine-jdk:base
+MAINTAINER lanu
+COPY files/auth-service.jar /opt/lib/
+COPY files/auth-service-entrypoint.sh /opt/bin/auth-service-entrypoint.sh
+RUN chmod 755 /opt/bin/auth-service-entrypoint.sh
+EXPOSE 8002

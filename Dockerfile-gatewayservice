@@ -1,0 +1,6 @@
+FROM alpine-jdk:base
+MAINTAINER lanu
+COPY files/gateway-service.jar /opt/lib/
+COPY files/gateway-service-entrypoint.sh /opt/bin/gateway-service-entrypoint.sh
+RUN chmod 755 /opt/bin/gateway-service-entrypoint.sh
+EXPOSE 8080

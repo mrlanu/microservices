@@ -1,15 +1,18 @@
 #This file is the entrypoint for spring to know where to look for the configuration file and hold the initial configuration
 spring:
-  cloud:
-    config:
-      name: registry-service
-      uri: http://localhost:8000 #where the config-service is running
-      password: 1234 #password of the config-service
-      username: user #username of the config-service
+  application:
+    name: registry-service #name of the application
+
+server:
+  port: 8001 #the default port used for eureka servers
 
 eureka:
   instance:
-    prefer-ip-address: true #when the application registers with eureka, it uses its IP address rather than its hostname
+    prefer-ip-address: true
   client:
-    registerWithEureka: false #tells the built-in eureka client to not register itself with eureka, because we should act as a server
-    fetchRegistry: false
+    region: default
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://localhost:8001/eureka/
+    register-with-eureka: false
+    fetch-registry: false

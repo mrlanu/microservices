@@ -1,36 +1,110 @@
 version: '3'
 services:
+    mongo-oauth:
+        container_name: mongo-oauth
+        image: mongo:4.0.4
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+            MONGO_INITDB_DATABASE: oauth-db
+            MONGODB_USER: oauth-user
+            MONGODB_DATABASE: oauth-db
+            MONGODB_PASS: password
+        ports:
+            - 27017:27017
+        networks:
+            - emp-network
+        volumes:
+            - ./mongo-init/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+    mongo-express-oauth:
+        container_name: mongo-express-oauth
+        image: mongo-express:0.49
+        restart: always
+        ports:
+            - 10081:8081
+        networks:
+            - emp-network
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: example
+            ME_CONFIG_MONGODB_SERVER: mongo-oauth
+            ME_CONFIG_MONGODB_PORT: 27017
+        links:
+            - mongo-oauth
+    registry-service:
+        container_name: registry-service
+        build:
+            context: .
+            dockerfile: Dockerfile-registryservice
+        image: registry-service:latest
+        expose:
+            - 8001
+        ports:
+            - 8001:8001
+        networks:
+            - emp-network
     config-service:
         container_name: config-service
         build:
             context: .
             dockerfile: Dockerfile-configservice
         image: config-service:latest
+        entrypoint: /opt/bin/config-service-entrypoint.sh
+        depends_on:
+            - registry-service
         environment:
-            - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH-LOCATION=file://application-config/shared
+            - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH-LOCATIONS=file:///application-config/shared
+            - EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://registry-service:8001/eureka/
         expose:
-            - 8888
+            - 8000
         ports:
-            - 8888:8888
+            - 8000:8000
         networks:
             - emp-network
-    registry-service:
-        container_name: eureka-service
+    gateway-service:
+        container_name: gateway-service
         build:
             context: .
-            dockerfile: Dockerfile-registryservice
-        image: registry-service:latest
+            dockerfile: Dockerfile-gatewayservice
+        image: gateway-service:latest
+        entrypoint: /opt/bin/gateway-service-entrypoint.sh
         depends_on:
+            - registry-service
             - config-service
         environment:
-            - SPRING_CLOUD_CONFIG_URI=http://config-service:8888
-        entrypoint: /opt/bin/registry-service-entrypoint.sh
+            - EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://registry-service:8001/eureka/
         expose:
-            - 8761
+            - 8080
         ports:
-            - 8761:8761
+            - 8080:8080
+        links:
+          - config-service
+          - registry-service
         networks:
             - emp-network
+    auth-service:
+        container_name: auth-service
+        build:
+            context: .
+            dockerfile: Dockerfile-authservice
+        image: auth-service:latest
+        entrypoint: /opt/bin/auth-service-entrypoint.sh
+        depends_on:
+            - registry-service
+            - mongo-oauth
+            - config-service
+        environment:
+            - SPRING_DATA_MONGODB_HOST=http://mongo-oauth:27017
+            - EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://registry-service:8001/eureka/
+        expose:
+            - 8002
+        ports:
+            - 8002:8002
+        networks:
+            - emp-network
+        links:
+            - mongo-oauth
 networks:
     emp-network:
         driver: bridge

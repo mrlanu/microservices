@@ -1,9 +1,8 @@
 FROM alpine-jdk:base
 MAINTAINER lanu
 COPY files/config-service.jar /opt/lib/
-COPY application-config/shared /application-config/shared
-ENTRYPOINT ["/usr/bin/java"]
-CMD ["-jar", "/opt/lib/config-service.jar"]
-VOLUME /var/lib/config-repo
-EXPOSE 8888
+COPY config-server/src/main/resources/shared /application-config/shared/
+COPY files/config-service-entrypoint.sh /opt/bin/config-service-entrypoint.sh
+RUN chmod 755 /opt/bin/config-service-entrypoint.sh
+EXPOSE 8000
 

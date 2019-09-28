@@ -4,10 +4,3 @@ spring:
 
 server:
   port: 8001 #the default port used for eureka servers
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8001/eureka/
-    register-with-eureka: false
-    fetch-registry: false
