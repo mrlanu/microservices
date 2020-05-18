@@ -16,8 +16,10 @@ server:
   port: 8000 #the port where the config-server will be accessible
 
 eureka:
+  instance:
+    instance-id: ${spring.application.name}
   client:
     region: default
-    registryFetchIntervalSeconds: 5
+    registryFetchIntervalSeconds: 3
     serviceUrl:
       defaultZone: http://localhost:8001/eureka/

@@ -7,6 +7,10 @@ server:
     context-path: /employee
   port: 8004
 
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+
 feign:
   hystrix:
     enabled: true
@@ -14,7 +18,7 @@ feign:
 security:
   oauth2:
     client:
-      clientId: account-service
+      clientId: employee-service
       clientSecret: 1234
       accessTokenUri: http://localhost:8080/uaa/oauth/token
       grant-type: client_credentials

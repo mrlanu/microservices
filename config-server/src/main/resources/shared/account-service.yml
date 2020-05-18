@@ -2,6 +2,10 @@ spring:
   application:
     name: account-service
 
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${random.value}}
+
 security:
   oauth2:
     client:

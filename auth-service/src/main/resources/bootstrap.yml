@@ -8,6 +8,8 @@ spring:
       fail-fast: true
       password: 1234
       username: user
+  application:
+      name: auth-service
 
 eureka:
   client:

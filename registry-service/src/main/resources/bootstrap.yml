@@ -8,10 +8,10 @@ server:
 
 eureka:
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
   client:
     region: default
-    registryFetchIntervalSeconds: 5
+    registryFetchIntervalSeconds: 3
     serviceUrl:
       defaultZone: http://localhost:8001/eureka/
     register-with-eureka: false
